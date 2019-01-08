@@ -1,0 +1,18 @@
+git config --global user.email "alu0100832211@ull.edu.es"
+git config --global user.name "Martin"
+git add -A
+if [ -z $1 ]; then
+git commit -m "Cambios"
+else
+  git commit -m "$1" 
+fi
+
+#ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
+#cat ~/.ssh/id_rsa.pub
+#read
+git config credential.helper cache
+git status -sb
+echo -n "Continuar"
+read
+git pull origin master
+git push origin master
