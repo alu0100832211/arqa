@@ -28,6 +28,8 @@ void firFloatInit( void )
 void firFloat( double *coeffs, double *input, double *output,
        int length, int filterLength )
 {
+    printf(" length %i filterlength %i ", length, filterLength);
+    for (int i = 0; i < )
     double acc;     // accumulator for MACs
     double *coeffp; // pointer to coefficients
     double *inputp; // pointer to input samples
@@ -120,25 +122,27 @@ int main( void )
     // open the input waveform file
     in_fid = fopen( "input.pcm", "rb" );
     if ( in_fid == 0 ) {
-        printf("couldn't open input.pcm");
+        printf("couldn't open input.pcm\n");
         return -1;
     }
  
     // open the output waveform file
-    out_fid = fopen( "outputFloat.pcm", "wb" );
+    out_fid = fopen( "output.pcm", "wb" );
     if ( out_fid == 0 ) {
-        printf("couldn't open outputFloat.pcm");
+        printf("couldn't open outputFloat.pcm\n");
         return -1;
     }
  
     // initialize the filter
     firFloatInit();
+    
+    int i = 0;
  
     // process all of the samples
     do {
         // read samples from file
         size = fread( input, sizeof(int16_t), SAMPLES, in_fid );
-        printf("%i datos leidos en input\n", SAMPLES);
+        printf("size %i i = %i\n", size, ++i);
         // convert to doubles
         intToFloat( input, floatInput, size );
         // perform the filtering
@@ -147,6 +151,7 @@ int main( void )
         // convert to ints
         floatToInt( floatOutput, output, size );
         // write samples to file
+
         fwrite( output, sizeof(int16_t), size, out_fid );
     } while ( size != 0 );
  
